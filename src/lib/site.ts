@@ -12,7 +12,7 @@ export const site = {
   address: "United Kingdom",
   // Paste the profile URLs here; icons show regardless, links activate once filled in.
   social: {
-    facebook: "",
+    facebook: "https://www.facebook.com/share/1VqrD7E1i8/",
     instagram: "",
   },
   disclaimer:

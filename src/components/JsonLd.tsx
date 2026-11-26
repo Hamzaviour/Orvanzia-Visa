@@ -45,7 +45,7 @@ export const organizationLd = () => ({
       availableLanguage: ["English"],
     },
   ],
-  sameAs: [`https://wa.me/${site.whatsapp}`],
+  sameAs: [`https://wa.me/${site.whatsapp}`, site.social.facebook, site.social.instagram].filter(Boolean),
 });
 
 export const websiteLd = () => ({
