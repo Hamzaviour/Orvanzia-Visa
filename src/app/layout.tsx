@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import FloatingContact from "@/components/FloatingContact";
 import Cursor from "@/components/Cursor";
+import SocialRail from "@/components/SocialRail";
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main>{children}</main>
         <Footer />
+        <SocialRail />
         <FloatingContact />
         <Cursor />
       </body>
