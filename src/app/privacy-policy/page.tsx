@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Privacy Policy" };
+export const metadata: Metadata = { title: "Privacy Policy", description: "Privacy Policy for Orvanzia Visa, a UK private visa consultancy.", alternates: { canonical: "/privacy-policy" } };
 
 export default function Page() {
   return (

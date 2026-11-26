@@ -9,6 +9,7 @@ import WhatsAppIcon from "@/components/WhatsAppIcon";
 export const metadata: Metadata = {
   title: "Contact Us",
   description: `Contact Orvanzia Visa for visa assistance from the UK. WhatsApp or call ${site.phone}, or email ${site.email}.`,
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

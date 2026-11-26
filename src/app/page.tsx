@@ -9,6 +9,7 @@ import { ConsultationForm, EnquiryForm } from "@/components/Forms";
 import { ServiceIcon } from "@/components/Icons";
 import { Counter, Reveal, SectionHeading, Stagger, StaggerItem, Tilt } from "@/components/motion";
 import AboutCollage from "@/components/AboutCollage";
+import { JsonLd, faqLd } from "@/components/JsonLd";
 import { popularCountries, countries, photo, flag } from "@/lib/countries";
 import { faqs, services } from "@/lib/services";
 
@@ -24,6 +25,7 @@ export default function Home() {
   const aboutFlags = ["gb", "fr", "us", "ae", "jp"];
   return (
     <>
+      <JsonLd data={faqLd(faqs)} />
       <HeroSlider />
       <FlagMarquee />
 

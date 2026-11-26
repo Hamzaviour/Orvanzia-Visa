@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Refund Policy" };
+export const metadata: Metadata = { title: "Refund Policy", description: "Refund Policy for Orvanzia Visa, a UK private visa consultancy.", alternates: { canonical: "/refund-policy" } };
 
 export default function Page() {
   return (

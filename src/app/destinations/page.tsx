@@ -8,6 +8,7 @@ import { countries, photo } from "@/lib/countries";
 export const metadata: Metadata = {
   title: "Explore Destinations – Visa Requirements for 196 Countries",
   description: "Explore visa types, indicative processing times and service fees for 196 destinations. Schengen, e-Visa, ETA, visa on arrival and embassy visas.",
+  alternates: { canonical: "/destinations" },
 };
 
 const collage = ["jp", "it", "ae", "ma", "th", "ch"];

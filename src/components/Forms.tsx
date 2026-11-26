@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { countries } from "@/lib/countries";
@@ -63,6 +64,7 @@ function DestinationSelect({ defaultValue }: { defaultValue?: string }) {
 
 export function EnquiryForm({ destination }: { destination?: string }) {
   const [s, setS] = useState<Status>({ state: "idle" });
+  const router = useRouter();
   return (
     <AnimatePresence mode="wait">
       {s.state === "done" ? (
@@ -76,8 +78,12 @@ export function EnquiryForm({ destination }: { destination?: string }) {
             setS({ state: "sending" });
             const f = e.currentTarget;
             const r = await submit(f, "enquiry");
+            if (r.state === "done") {
+              f.reset();
+              router.push("/thank-you");
+              return;
+            }
             setS(r);
-            if (r.state === "done") f.reset();
           }}
           className="relative grid gap-4 sm:grid-cols-2"
         >
@@ -115,6 +121,7 @@ export function EnquiryForm({ destination }: { destination?: string }) {
 
 export function ConsultationForm({ destination, visa }: { destination?: string; visa?: string }) {
   const [s, setS] = useState<Status>({ state: "idle" });
+  const router = useRouter();
   return (
     <AnimatePresence mode="wait">
       {s.state === "done" ? (
@@ -128,8 +135,12 @@ export function ConsultationForm({ destination, visa }: { destination?: string; 
             setS({ state: "sending" });
             const f = e.currentTarget;
             const r = await submit(f, "consultation");
+            if (r.state === "done") {
+              f.reset();
+              router.push("/thank-you");
+              return;
+            }
             setS(r);
-            if (r.state === "done") f.reset();
           }}
           className="relative grid gap-4 sm:grid-cols-2"
         >

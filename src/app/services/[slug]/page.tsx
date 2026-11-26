@@ -9,6 +9,7 @@ import { ServiceIcon } from "@/components/Icons";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { getService, services } from "@/lib/services";
 import { popularCountries } from "@/lib/countries";
+import { JsonLd, breadcrumbLd, serviceLd } from "@/components/JsonLd";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -17,7 +18,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const s = getService(slug);
-  return s ? { title: `${s.title} Assistance from the UK`, description: s.intro } : {};
+  return s
+    ? {
+        title: `${s.title} Assistance from the UK`,
+        description: s.intro,
+        alternates: { canonical: `/services/${s.slug}` },
+        openGraph: { title: `${s.title} Assistance from the UK`, description: s.intro, url: `/services/${s.slug}` },
+      }
+    : {};
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -27,6 +35,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbLd([
+            { name: "Services", path: "/services" },
+            { name: s.title, path: `/services/${s.slug}` },
+          ]),
+          serviceLd(s.title, s.intro, `/services/${s.slug}`),
+        ]}
+      />
       <PageHero eyebrow="Visa service" title={s.title} text={s.intro} crumbs={[{ label: "Services", href: "/services" }, { label: s.title }]}>
         <Link href="#book" className="btn-gold mt-8">
           Book a Consultation <ArrowRight size={17} />

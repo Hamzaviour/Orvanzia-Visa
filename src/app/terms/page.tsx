@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Terms & Conditions" };
+export const metadata: Metadata = { title: "Terms & Conditions", description: "Terms & Conditions for Orvanzia Visa, a UK private visa consultancy.", alternates: { canonical: "/terms" } };
 
 export default function Page() {
   return (

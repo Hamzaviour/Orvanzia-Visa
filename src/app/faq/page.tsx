@@ -5,15 +5,18 @@ import PageHero from "@/components/PageHero";
 import Faq from "@/components/Faq";
 import { Reveal } from "@/components/motion";
 import { faqs } from "@/lib/services";
+import { JsonLd, breadcrumbLd, faqLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description: "Answers to common questions about visa assistance, processing times, documents and refusals.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {
   return (
     <>
+      <JsonLd data={[faqLd(faqs), breadcrumbLd([{ name: "FAQs", path: "/faq" }])]} />
       <PageHero eyebrow="FAQ" title="Frequently Asked Questions" text="Quick answers about visa assistance and the application process." crumbs={[{ label: "FAQs" }]} />
       <section className="section">
         <div className="container-x max-w-3xl">

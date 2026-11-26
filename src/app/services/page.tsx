@@ -10,6 +10,7 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Visa Services – Tourist, Business, Family, Student, Work & Transit",
   description: "Comprehensive visa assistance for UK travellers: tourist, business, family & friends, student, work and transit visas.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {

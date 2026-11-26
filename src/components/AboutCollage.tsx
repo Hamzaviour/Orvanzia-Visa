@@ -70,7 +70,7 @@ export default function AboutCollage({ pics }: { pics: Pic[] }) {
             <textPath href="#circle">Your journey matters • Orvanzia Visa •</textPath>
           </text>
         </motion.svg>
-        <Image src="/icon-192.png" alt="" width={192} height={192} className="h-12 w-12 rounded-xl sm:h-14 sm:w-14" />
+        <Image src="/icons/icon-192.png" alt="" width={192} height={192} className="h-12 w-12 rounded-xl sm:h-14 sm:w-14" />
       </motion.div>
 
       {/* floating stat */}

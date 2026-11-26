@@ -8,6 +8,7 @@ import { countries, photo } from "@/lib/countries";
 export const metadata: Metadata = {
   title: "About Us",
   description: "Orvanzia Visa is a UK-based private visa consultancy helping travellers apply for visas with clear guidance and dedicated support.",
+  alternates: { canonical: "/about" },
 };
 
 const values = [

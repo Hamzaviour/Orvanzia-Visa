@@ -1,7 +1,10 @@
 export const site = {
   name: "Orvanzia Visa",
   tagline: "Trusted Visa Assistance for Travellers in the UK",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://orvanziavisa.co.uk",
+  // Set NEXT_PUBLIC_SITE_URL once the custom domain is connected; until then the Vercel production URL is used.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://orvanzia-visa.vercel.app"),
   email: "hello@orvanziavisa.co.uk",
   // Add a phone / WhatsApp number (digits only for WhatsApp, e.g. "447700900123") to show them on the site.
   phone: "+44 7862 600871",

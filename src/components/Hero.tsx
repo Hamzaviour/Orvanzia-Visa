@@ -28,7 +28,7 @@ export default function VideoSlide({ active = true }: { active?: boolean }) {
           loop
           playsInline
           preload="auto"
-          poster="/video/hero-poster.jpg"
+          poster="/video/hero-poster.webp"
           aria-hidden
         >
           <source src="/video/hero.webm" type="video/webm" />

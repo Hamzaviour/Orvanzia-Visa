@@ -11,11 +11,11 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const DURATIONS = [9000, 7000]; // ms per slide: video, branded image
 
 const landmarks = [
-  { src: "/hero/big-ben.jpg", label: "London", cls: "left-[4%] top-[18%] h-[58%] w-[24%] z-20", d: 0.1 },
-  { src: "/hero/eiffel-tower.jpg", label: "Paris", cls: "left-[24%] top-[4%] h-[46%] w-[30%] z-10", d: 0.2 },
-  { src: "/hero/burj-khalifa.jpg", label: "UAE", cls: "right-[2%] top-[8%] h-[40%] w-[34%] z-10", d: 0.3 },
-  { src: "/hero/statue-of-liberty.jpg", label: "New York", cls: "right-[6%] top-[50%] h-[44%] w-[22%] z-20", d: 0.4 },
-  { src: "/hero/colosseum.jpg", label: "Rome", cls: "left-[30%] top-[52%] h-[40%] w-[36%] z-30", d: 0.5 },
+  { src: "/hero/big-ben.webp", label: "London", alt: "Big Ben and the Houses of Parliament, London", cls: "left-[4%] top-[18%] h-[58%] w-[24%] z-20", d: 0.1 },
+  { src: "/hero/eiffel-tower.webp", label: "Paris", alt: "Eiffel Tower and the Paris skyline", cls: "left-[24%] top-[4%] h-[46%] w-[30%] z-10", d: 0.2 },
+  { src: "/hero/burj-khalifa.webp", label: "UAE", alt: "City skyline in the United Arab Emirates", cls: "right-[2%] top-[8%] h-[40%] w-[34%] z-10", d: 0.3 },
+  { src: "/hero/statue-of-liberty.webp", label: "New York", alt: "Statue of Liberty, New York", cls: "right-[6%] top-[50%] h-[44%] w-[22%] z-20", d: 0.4 },
+  { src: "/hero/colosseum.webp", label: "Rome", alt: "The Colosseum, Rome", cls: "left-[30%] top-[52%] h-[40%] w-[36%] z-30", d: 0.5 },
 ];
 
 function BrandSlide({ active }: { active: boolean }) {
@@ -109,7 +109,7 @@ function BrandSlide({ active }: { active: boolean }) {
               className={`absolute overflow-hidden rounded-[22px] border-4 border-white shadow-[0_24px_50px_-20px_rgba(6,18,53,0.55)] ${l.cls}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={l.src} alt={l.label} className="h-full w-full object-cover" />
+              <img src={l.src} alt={l.alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
               <span className="absolute bottom-2 left-2 rounded-full bg-navy-900/70 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur">
                 {l.label}
               </span>
@@ -185,7 +185,7 @@ export default function HeroSlider() {
   return (
     <div
       ref={wrap}
-      className="relative"
+      className="relative overflow-hidden"
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={(e) => {
         if (!wrap.current?.contains(e.relatedTarget as Node)) setPaused(false);
@@ -231,7 +231,7 @@ export default function HeroSlider() {
               onClick={() => go(i)}
               aria-label={`Go to slide ${i + 1}`}
               aria-current={slide === i}
-              className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${i === slide ? "w-14" : "w-6"} ${
+              className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 before:absolute before:-inset-x-1 before:-inset-y-4 before:content-[''] ${i === slide ? "w-14" : "w-6"} ${
                 slide === 0 ? "bg-white/30" : "bg-navy-800/15"
               }`}
             >

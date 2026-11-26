@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/LegalPage";
 
-export const metadata: Metadata = { title: "Visa Guidance", description: "Practical guidance for preparing a strong visa application from the UK." };
+export const metadata: Metadata = { title: "Visa Guidance", description: "Practical guidance for preparing a strong visa application from the UK.", alternates: { canonical: "/visa-guidance" } };
 
 export default function Page() {
   return (

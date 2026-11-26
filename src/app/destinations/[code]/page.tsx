@@ -7,6 +7,7 @@ import CountryCard from "@/components/CountryCard";
 import { ConsultationForm } from "@/components/Forms";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { countries, flag, getCountry, photo, requirementsFor } from "@/lib/countries";
+import { JsonLd, breadcrumbLd, serviceLd } from "@/components/JsonLd";
 
 export function generateStaticParams() {
   return countries.map((c) => ({ code: c.code }));
@@ -16,9 +17,15 @@ export async function generateMetadata({ params }: { params: Promise<{ code: str
   const { code } = await params;
   const c = getCountry(code);
   if (!c) return {};
+  const title = `${c.name} Visa from the UK – Requirements, Fees & Processing`;
+  const description = `Apply for your ${c.name} ${c.visa.toLowerCase()} from the UK with Orvanzia Visa. Indicative processing ~${c.processingDays} days. Document checklist, fees and expert support.`;
   return {
-    title: `${c.name} Visa from the UK – Requirements, Fees & Processing`,
-    description: `Apply for your ${c.name} ${c.visa.toLowerCase()} from the UK with Orvanzia Visa. Indicative processing ~${c.processingDays} days. Document checklist, fees and expert support.`,
+    title,
+    description,
+    keywords: [`${c.name} visa`, `${c.name} visa UK`, `${c.name} ${c.visa}`, `${c.name} visa requirements`, `${c.name} visa from London`],
+    alternates: { canonical: `/destinations/${c.code}` },
+    openGraph: { title, description, url: `/destinations/${c.code}`, images: [{ url: photo(c, 960), alt: `${c.name}` }] },
+    twitter: { card: "summary_large_image", title, description, images: [photo(c, 960)] },
   };
 }
 
@@ -39,6 +46,17 @@ export default async function CountryPage({ params }: { params: Promise<{ code: 
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbLd([
+            { name: "Destinations", path: "/destinations" },
+            { name: `${c.name} Visa`, path: `/destinations/${c.code}` },
+          ]),
+          serviceLd(`${c.name} visa assistance`, `Visa application support for ${c.name} (${c.visa}) for UK residents.`, `/destinations/${c.code}`, {
+            offers: { "@type": "Offer", price: c.serviceFrom, priceCurrency: "GBP", description: "Service fee from (excludes government fees)" },
+          }),
+        ]}
+      />
       <PageHero
         eyebrow={`${c.region} · ${c.visa}`}
         title={`${c.name} Visa`}

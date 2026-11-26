@@ -7,6 +7,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 export const metadata: Metadata = {
   title: "Apply Now – Start Your Visa Application",
   description: "Start your visa application with Orvanzia Visa. Share your travel details and book a consultation.",
+  alternates: { canonical: "/apply" },
 };
 
 export default function ApplyPage() {
