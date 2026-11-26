@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { site } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const cols = [
   {
@@ -72,11 +73,16 @@ export default function Footer() {
             </li>
             {site.phone && (
               <li>
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-white">
+                <a href={`tel:+${site.whatsapp}`} className="flex items-center gap-2 hover:text-white">
                   <Phone size={15} className="text-gold-400" /> {site.phone}
                 </a>
               </li>
             )}
+            <li>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+                <WhatsAppIcon size={15} className="text-gold-400" /> WhatsApp us
+              </a>
+            </li>
             <li className="flex items-center gap-2">
               <MapPin size={15} className="text-gold-400" /> {site.address}
             </li>

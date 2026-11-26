@@ -5,8 +5,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, ChevronDown, Mail, Menu, X } from "lucide-react";
-import { nav, site } from "@/lib/site";
+import { ArrowRight, ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
+import { nav, site, whatsappLink } from "@/lib/site";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function Header() {
   const pathname = usePathname();
@@ -39,17 +40,25 @@ export default function Header() {
       <div
         className={`overflow-hidden bg-navy-900 text-white transition-all duration-500 ${scrolled ? "max-h-0" : "max-h-12"}`}
       >
-        <div className="container-x flex h-9 items-center justify-between text-xs font-medium">
-          <span className="flex items-center gap-2">
+        <div className="container-x flex h-9 items-center justify-between gap-3 text-xs font-medium">
+          <span className="flex min-w-0 items-center gap-2 truncate">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-400" />
             </span>
             {site.tagline}
           </span>
-          <a href={`mailto:${site.email}`} className="hidden items-center gap-1.5 hover:text-gold-400 sm:flex">
-            <Mail size={13} /> {site.email}
-          </a>
+          <div className="flex items-center gap-5">
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-gold-400">
+              <WhatsAppIcon size={13} /> <span className="hidden sm:inline">WhatsApp</span>
+            </a>
+            <a href={`tel:+${site.whatsapp}`} className="hidden items-center gap-1.5 hover:text-gold-400 md:flex">
+              <Phone size={13} /> {site.phone}
+            </a>
+            <a href={`mailto:${site.email}`} className="hidden items-center gap-1.5 hover:text-gold-400 lg:flex">
+              <Mail size={13} /> {site.email}
+            </a>
+          </div>
         </div>
       </div>
 

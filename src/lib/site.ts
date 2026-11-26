@@ -4,8 +4,8 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://orvanziavisa.co.uk",
   email: "hello@orvanziavisa.co.uk",
   // Add a phone / WhatsApp number (digits only for WhatsApp, e.g. "447700900123") to show them on the site.
-  phone: "",
-  whatsapp: "",
+  phone: "+44 7862 600871",
+  whatsapp: "447862600871",
   address: "United Kingdom",
   disclaimer:
     "Orvanzia Visa is an independent private consultancy and is not a government body, embassy, consulate or official visa application centre. Visa decisions are made solely by the relevant authorities.",
@@ -55,3 +55,6 @@ export const nav = [
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
 ];
+
+export const whatsappLink = (text = "Hello Orvanzia Visa, I'd like some help with my visa application.") =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;

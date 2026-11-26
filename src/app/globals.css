@@ -110,7 +110,7 @@ h4 {
   }
 }
 .animate-marquee {
-  animation: marquee 60s linear infinite;
+  animation: marquee 120s linear infinite;
 }
 .animate-marquee-rev {
   animation: marquee 70s linear infinite reverse;

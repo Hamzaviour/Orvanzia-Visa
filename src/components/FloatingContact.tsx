@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUp, Mail, MessageCircle } from "lucide-react";
-import { site } from "@/lib/site";
+import { ArrowUp, Mail } from "lucide-react";
+import { site, whatsappLink } from "@/lib/site";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function FloatingContact() {
   const [show, setShow] = useState(false);
@@ -31,14 +32,15 @@ export default function FloatingContact() {
       </AnimatePresence>
       {site.whatsapp ? (
         <a
-          href={`https://wa.me/${site.whatsapp}`}
+          href={whatsappLink()}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="relative grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:scale-110"
+          className="group relative grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:scale-110"
         >
           <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-30" />
-          <MessageCircle size={26} />
+          <WhatsAppIcon size={28} />
+          <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-ink shadow-lg group-hover:block">Chat on WhatsApp</span>
         </a>
       ) : (
         <a
