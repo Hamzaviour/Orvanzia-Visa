@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { site, whatsappLink } from "@/lib/site";
 import WhatsAppIcon from "./WhatsAppIcon";
+import SocialIcons from "./SocialIcons";
 
 const cols = [
   {
@@ -48,6 +49,11 @@ export default function Footer() {
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/75 lg:mt-5 lg:text-[15px]">
             Professional visa assistance for travellers from the UK, with clear guidance and dedicated support for 196 destinations.
           </p>
+          <SocialIcons
+            size={18}
+            className="mt-5 !gap-3"
+            itemClassName="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:-translate-y-0.5 hover:bg-gold-500 hover:text-navy-950"
+          />
         </div>
         {cols.map((c) => (
           <div key={c.title}>

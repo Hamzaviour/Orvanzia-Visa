@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 import { nav, site, whatsappLink } from "@/lib/site";
 import WhatsAppIcon from "./WhatsAppIcon";
+import SocialIcons from "./SocialIcons";
 
 export default function Header() {
   const pathname = usePathname();
@@ -48,7 +49,8 @@ export default function Header() {
             </span>
             {site.tagline}
           </span>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4 sm:gap-5">
+            <SocialIcons size={13} className="!gap-3" itemClassName="transition hover:text-gold-400" />
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-gold-400">
               <WhatsAppIcon size={13} /> <span className="hidden sm:inline">WhatsApp</span>
             </a>

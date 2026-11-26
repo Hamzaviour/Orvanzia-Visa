@@ -10,6 +10,11 @@ export const site = {
   phone: "+44 7862 600871",
   whatsapp: "447862600871",
   address: "United Kingdom",
+  // Paste the profile URLs here; icons show regardless, links activate once filled in.
+  social: {
+    facebook: "",
+    instagram: "",
+  },
   disclaimer:
     "Orvanzia Visa is an independent private consultancy and is not a government body, embassy, consulate or official visa application centre. Visa decisions are made solely by the relevant authorities.",
 };

@@ -5,6 +5,7 @@ import { EnquiryForm } from "@/components/Forms";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { site, whatsappLink } from "@/lib/site";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import SocialIcons from "@/components/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -48,6 +49,17 @@ export default function ContactPage() {
                 </a>
               </StaggerItem>
             ))}
+            <StaggerItem className="flex items-center justify-between rounded-3xl border border-line p-6">
+              <span>
+                <span className="block text-sm text-muted">Follow us</span>
+                <span className="block text-lg font-semibold text-ink">Facebook &amp; Instagram</span>
+              </span>
+              <SocialIcons
+                size={20}
+                className="!gap-3"
+                itemClassName="grid h-12 w-12 place-items-center rounded-2xl bg-navy-50 text-navy-800 transition hover:bg-gold-500 hover:text-navy-950"
+              />
+            </StaggerItem>
           </Stagger>
           <Reveal delay={0.1}>
             <div className="rounded-3xl border border-line bg-white p-6 shadow-[0_30px_80px_-40px_rgba(12,31,92,0.5)] sm:p-9">
