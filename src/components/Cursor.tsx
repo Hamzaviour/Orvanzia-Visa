@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
+import { Plane } from "lucide-react";
 
 type Mode = "default" | "link" | "text" | "label" | "hidden";
 
 /**
- * Custom cursor: small gold dot plus a trailing navy ring.
+ * Custom cursor: a small gold plane that turns toward the direction of travel, plus a trailing ring.
  * - grows over links / buttons
  * - shows a label over elements with data-cursor="Label"
  * - shrinks to a caret-friendly state over inputs
@@ -22,6 +23,8 @@ export default function Cursor() {
   const y = useMotionValue(-100);
   const rx = useSpring(x, { stiffness: 350, damping: 30, mass: 0.6 });
   const ry = useSpring(y, { stiffness: 350, damping: 30, mass: 0.6 });
+  const heading = useMotionValue(0);
+  const rot = useSpring(heading, { stiffness: 140, damping: 18 });
 
   useEffect(() => {
     const mq = window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)");
@@ -35,7 +38,20 @@ export default function Cursor() {
     if (!enabled) return;
     document.documentElement.classList.add("has-custom-cursor");
 
+    let lx = 0;
+    let ly = 0;
     const move = (e: MouseEvent) => {
+      const dx = e.clientX - lx;
+      const dy = e.clientY - ly;
+      if (dx * dx + dy * dy > 16) {
+        // lucide's Plane points up-right (-45deg); turn its nose toward the movement direction
+        let target = (Math.atan2(dy, dx) * 180) / Math.PI + 45;
+        const cur = heading.get();
+        target = cur + ((((target - cur) % 360) + 540) % 360) - 180; // shortest turn
+        heading.set(target);
+        lx = e.clientX;
+        ly = e.clientY;
+      }
       x.set(e.clientX);
       y.set(e.clientY);
       const t = e.target as HTMLElement | null;
@@ -68,7 +84,7 @@ export default function Cursor() {
       window.removeEventListener("mousedown", md);
       window.removeEventListener("mouseup", mu);
     };
-  }, [enabled, x, y]);
+  }, [enabled, x, y, heading]);
 
   if (!enabled) return null;
 
@@ -113,12 +129,16 @@ export default function Cursor() {
           </AnimatePresence>
         </motion.div>
       </motion.div>
-      {/* precise dot */}
+      {/* plane pointer */}
       <motion.div style={{ x, y }} className="absolute left-0 top-0">
         <motion.div
-          animate={{ scale: mode === "label" || mode === "hidden" ? 0 : mode === "link" ? 0.6 : 1 }}
-          className="h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold-500 shadow-[0_0_0_2px_rgba(255,255,255,0.8)]"
-        />
+          style={{ rotate: rot }}
+          animate={{ scale: mode === "label" || mode === "hidden" ? 0 : mode === "link" ? 0.85 : mode === "text" ? 0.6 : 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="-translate-x-1/2 -translate-y-1/2"
+        >
+          <Plane size={22} strokeWidth={1.6} className="fill-gold-500 text-navy-800 drop-shadow-[0_2px_3px_rgba(6,18,53,0.35)]" />
+        </motion.div>
       </motion.div>
     </div>
   );

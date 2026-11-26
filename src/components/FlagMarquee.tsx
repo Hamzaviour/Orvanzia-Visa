@@ -1,47 +1,39 @@
 import Link from "next/link";
-import { countries, flag, shortName, type Country } from "@/lib/countries";
-
-function Row({ list, reverse = false }: { list: Country[]; reverse?: boolean }) {
-  const row = [...list, ...list];
-  return (
-    <div className="group flex overflow-hidden">
-      <div className={`flex w-max gap-4 ${reverse ? "animate-marquee-rev" : "animate-marquee"} group-hover:[animation-play-state:paused]`}>
-        {row.map((c, i) => (
-          <Link
-            key={c.code + i}
-            href={`/destinations/${c.code}`}
-            tabIndex={i >= list.length ? -1 : 0}
-            aria-hidden={i >= list.length}
-            className="group/f flex shrink-0 items-center gap-3 rounded-2xl border border-line bg-white py-2.5 pl-2.5 pr-6 shadow-[0_10px_30px_-20px_rgba(12,31,92,0.45)] transition duration-300 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_20px_40px_-20px_rgba(201,161,59,0.7)]"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={flag(c.code, 160)}
-              alt=""
-              loading="lazy"
-              className="h-10 w-[60px] shrink-0 rounded-md object-cover shadow-md ring-1 ring-black/10 transition duration-500 group-hover/f:scale-110 sm:h-11 sm:w-[66px]"
-            />
-            <span>
-              <span className="block whitespace-nowrap text-lg font-bold text-ink sm:text-xl">{shortName(c)}</span>
-              <span className="block whitespace-nowrap text-[11px] font-semibold uppercase tracking-wider text-gold-600">{c.visa}</span>
-            </span>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
+import { Plane } from "lucide-react";
+import { countries, flag, shortName } from "@/lib/countries";
 
 export default function FlagMarquee() {
-  const pool = countries.filter((c) => c.popular || c.visa === "Schengen Visa");
+  const list = countries.filter((c) => c.popular || c.visa === "Schengen Visa");
+  const row = [...list, ...list];
   return (
-    <section aria-label="Popular visa destinations" className="relative overflow-hidden bg-surface py-9">
-      <p className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.2em] text-muted">
-        Visa support for <span className="text-navy-700">196 destinations</span> worldwide
-      </p>
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-surface to-transparent sm:w-48" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-surface to-transparent sm:w-48" />
-      <Row list={pool} />
+    <section aria-label="Popular visa destinations" className="relative overflow-hidden border-y border-white/10 bg-navy-900 py-5">
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-navy-900 to-transparent sm:w-40" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-navy-900 to-transparent sm:w-40" />
+      <div className="group flex">
+        <div className="animate-marquee flex w-max items-center group-hover:[animation-play-state:paused]">
+          {row.map((c, i) => (
+            <div key={c.code + i} className="flex shrink-0 items-center" aria-hidden={i >= list.length}>
+              <Link
+                href={`/destinations/${c.code}`}
+                tabIndex={i >= list.length ? -1 : 0}
+                className="group/f flex items-center gap-3 rounded-full py-1.5 pl-1.5 pr-4 transition duration-300 hover:bg-white/10"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={flag(c.code, 80)}
+                  alt=""
+                  loading="lazy"
+                  className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-white/25 transition duration-500 group-hover/f:scale-110 group-hover/f:ring-gold-400"
+                />
+                <span className="whitespace-nowrap text-[17px] font-semibold tracking-tight text-white transition group-hover/f:text-gold-400">
+                  {shortName(c)}
+                </span>
+              </Link>
+              <Plane size={13} className="mx-4 shrink-0 rotate-45 text-gold-500/70" aria-hidden />
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

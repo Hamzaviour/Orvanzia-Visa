@@ -85,26 +85,27 @@ export default function DestinationSearch({ variant = "hero" }: { variant?: "her
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-line bg-white p-2 text-left shadow-2xl"
+            data-lenis-prevent
+            className="absolute inset-x-0 top-full z-50 mt-2 max-h-[min(300px,45vh)] overflow-y-auto overscroll-contain rounded-2xl border border-line bg-white p-2 text-left shadow-2xl"
           >
-            {!q && <li className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Popular destinations</li>}
+            {!q && <li className="sticky -top-2 z-10 -mx-2 -mt-2 bg-white px-5 pb-2 pt-3 text-[11px] font-semibold uppercase tracking-wider text-muted">Popular destinations</li>}
             {results.map((c, i) => (
               <li key={c.code} role="option" aria-selected={i === active}>
                 <button
                   type="button"
                   onMouseEnter={() => setActive(i)}
                   onClick={() => go(c.code)}
-                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ${i === active ? "bg-navy-50" : ""}`}
+                  className={`flex w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2 text-left transition ${i === active ? "bg-navy-50" : ""}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={flag(c.code, 40)} alt="" className="h-5 w-7 rounded-sm object-cover shadow-sm" />
-                  <span className="flex-1">
-                    <span className="block text-sm font-semibold text-ink">{c.name}</span>
-                    <span className="block text-xs text-muted">
+                  <img src={flag(c.code, 40)} alt="" className="h-5 w-7 shrink-0 rounded-sm object-cover shadow-sm" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-semibold text-ink">{c.name}</span>
+                    <span className="block truncate text-xs text-muted">
                       {c.visa} · ~{c.processingDays} days
                     </span>
                   </span>
-                  <ArrowRight size={15} className="text-navy-600" />
+                  <ArrowRight size={15} className="shrink-0 text-navy-600" />
                 </button>
               </li>
             ))}
