@@ -13,7 +13,7 @@ export const site = {
   // Paste the profile URLs here; icons show regardless, links activate once filled in.
   social: {
     facebook: "https://www.facebook.com/share/1VqrD7E1i8/",
-    instagram: "",
+    instagram: "https://www.instagram.com/orvanziavisa/",
   },
   disclaimer:
     "Orvanzia Visa is an independent private consultancy and is not a government body, embassy, consulate or official visa application centre. Visa decisions are made solely by the relevant authorities.",
