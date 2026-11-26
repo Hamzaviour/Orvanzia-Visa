@@ -9,7 +9,7 @@ import DestinationSearch from "./DestinationSearch";
 const ease = [0.22, 1, 0.36, 1] as const;
 const words = ["Fast,", "Clear", "&", "Stress-Free"];
 
-export default function Hero() {
+export default function VideoSlide({ active = true }: { active?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -18,11 +18,11 @@ export default function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <section ref={ref} className="relative isolate flex min-h-[calc(100svh-112px)] items-center overflow-hidden bg-navy-950">
+    <section ref={ref} aria-hidden={!active} inert={!active} className="relative isolate flex min-h-[calc(100svh-112px)] items-center overflow-hidden bg-navy-950">
       {/* background video */}
       <motion.div style={{ y: videoY, scale: videoScale }} className="absolute inset-0 -z-20">
         <video
-          className="h-full w-full object-cover"
+          className="h-full w-full -scale-x-100 object-cover object-[30%_center]"
           autoPlay
           muted
           loop
@@ -35,8 +35,8 @@ export default function Hero() {
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
       </motion.div>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-900/75 to-navy-900/20" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-navy-950/70 to-transparent" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-950/45 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-navy-950/50 to-transparent" />
 
       <motion.div style={{ y: contentY, opacity: fade }} className="container-x relative grid items-center gap-12 py-20 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
@@ -124,7 +124,7 @@ export default function Hero() {
           transition={{ duration: 1, ease, delay: 0.6 }}
           className="relative z-20"
         >
-          <div className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-7">
+          <div className="rounded-3xl border border-white/20 bg-navy-950/25 p-6 shadow-2xl backdrop-blur-[3px] sm:p-7">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold-400">Check your visa</p>
             <h2 className="mt-2 text-2xl font-bold text-white">Where are you travelling to?</h2>
             <div className="mt-5">

@@ -24,6 +24,7 @@ export default function CountryCard({ c, priority = false }: { c: Country; prior
     <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }}>
       <Link
         href={`/destinations/${c.code}`}
+        data-cursor="View"
         className="group relative block overflow-hidden rounded-3xl bg-navy-900 shadow-[0_18px_40px_-24px_rgba(6,18,53,0.7)] ring-1 ring-black/5"
       >
         <div className="relative aspect-[4/5] overflow-hidden">

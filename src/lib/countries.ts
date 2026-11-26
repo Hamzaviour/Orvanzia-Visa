@@ -132,3 +132,34 @@ export function requirementsFor(c: Country) {
   };
   return [...base, ...extra[c.visa]];
 }
+
+const SHORT: Record<string, string> = {
+  us: "USA",
+  ae: "UAE",
+  sa: "Saudi",
+  ba: "Bosnia",
+  cf: "C. Africa",
+  cd: "DR Congo",
+  cg: "Congo",
+  do: "Dominican Rep.",
+  gq: "Eq. Guinea",
+  kn: "St Kitts",
+  lc: "St Lucia",
+  vc: "St Vincent",
+  st: "São Tomé",
+  tt: "Trinidad",
+  ag: "Antigua",
+  pg: "Papua NG",
+  mh: "Marshall Is.",
+  sb: "Solomon Is.",
+  fm: "Micronesia",
+  mk: "N. Macedonia",
+  kp: "N. Korea",
+  kr: "S. Korea",
+  ss: "S. Sudan",
+  za: "S. Africa",
+  nz: "New Zealand",
+  va: "Vatican",
+};
+
+export const shortName = (c: Pick<Country, "code" | "name">) => SHORT[c.code] || c.name;

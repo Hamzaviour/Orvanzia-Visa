@@ -62,7 +62,7 @@ h4 {
 
 /* faint plane pattern, a nod to the brand mark */
 .plane-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cpath fill='%230c1f5c' fill-opacity='0.045' d='M128 104l-6-30-8 2 2 28-26 10-8-10-5 2 4 14-12 6 2 5 13-4 6 13 5-2-3-12 24-14 18 22 7-4-13-26z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cpath fill='%230c1f5c' fill-opacity='0.03' d='M128 104l-6-30-8 2 2 28-26 10-8-10-5 2 4 14-12 6 2 5 13-4 6 13 5-2-3-12 24-14 18 22 7-4-13-26z'/%3E%3C/svg%3E");
 }
 
 .eyebrow {
@@ -112,8 +112,8 @@ h4 {
 .animate-marquee {
   animation: marquee 60s linear infinite;
 }
-.animate-marquee:hover {
-  animation-play-state: paused;
+.animate-marquee-rev {
+  animation: marquee 70s linear infinite reverse;
 }
 
 @keyframes float-y {
@@ -127,6 +127,20 @@ h4 {
 }
 .animate-float {
   animation: float-y 6s ease-in-out infinite;
+}
+
+/* hide native cursor when the custom one is active (inputs keep the text caret) */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+html.has-custom-cursor input,
+html.has-custom-cursor textarea,
+html.has-custom-cursor [contenteditable="true"] {
+  cursor: text !important;
+}
+html.has-custom-cursor select {
+  cursor: pointer !important;
 }
 
 .no-scrollbar::-webkit-scrollbar {

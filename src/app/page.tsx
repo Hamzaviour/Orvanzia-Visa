@@ -1,7 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, CheckCircle2, Clock3, Eye, Headset, Info, ShieldCheck, UserRoundCheck } from "lucide-react";
-import Hero from "@/components/Hero";
+import HeroSlider from "@/components/HeroSlider";
 import FlagMarquee from "@/components/FlagMarquee";
 import Process from "@/components/Process";
 import Faq from "@/components/Faq";
@@ -9,7 +8,8 @@ import CountryCard from "@/components/CountryCard";
 import { ConsultationForm, EnquiryForm } from "@/components/Forms";
 import { ServiceIcon } from "@/components/Icons";
 import { Counter, Reveal, SectionHeading, Stagger, StaggerItem, Tilt } from "@/components/motion";
-import { popularCountries, countries, photo } from "@/lib/countries";
+import AboutCollage from "@/components/AboutCollage";
+import { popularCountries, countries, photo, flag } from "@/lib/countries";
 import { faqs, services } from "@/lib/services";
 
 const trust = [
@@ -20,10 +20,11 @@ const trust = [
 ];
 
 export default function Home() {
-  const paris = countries.find((c) => c.code === "fr")!;
+  const aboutPics = ["fr", "jp", "it", "ae"].map((code) => countries.find((c) => c.code === code)!);
+  const aboutFlags = ["gb", "fr", "us", "ae", "jp"];
   return (
     <>
-      <Hero />
+      <HeroSlider />
       <FlagMarquee />
 
       {/* WHY CHOOSE */}
@@ -150,27 +151,10 @@ export default function Home() {
 
       {/* ABOUT */}
       <section className="section overflow-hidden">
-        <div className="container-x grid items-center gap-14 lg:grid-cols-2">
-          <Reveal className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-2xl sm:aspect-[5/5]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo(paris, 960)} alt="Paris, France" loading="lazy" className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold-400">Orvanzia Visa</p>
-                <p className="mt-2 text-3xl font-bold text-white">Your journey matters.</p>
-              </div>
-            </div>
-            <div className="animate-float absolute -right-4 top-10 hidden rounded-2xl bg-white p-4 shadow-2xl sm:block">
-              <Image src="/logo.png" alt="" width={569} height={252} className="h-12 w-auto" />
-            </div>
-            <div className="absolute -bottom-6 left-6 rounded-2xl bg-navy-800 px-6 py-5 text-white shadow-2xl">
-              <p className="text-4xl font-extrabold text-gold-400">
-                <Counter to={196} />
-              </p>
-              <p className="text-sm text-white/75">destinations covered</p>
-            </div>
-          </Reveal>
+        <div className="container-x grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+          <AboutCollage
+            pics={aboutPics.map((c) => ({ src: photo(c, 500), alt: `${c.capital}, ${c.name}`, place: c.name }))}
+          />
           <div>
             <SectionHeading
               center={false}
@@ -178,27 +162,43 @@ export default function Home() {
               title="Your Trusted Partner for a Smoother Visa Journey"
               text="Visa applications can feel confusing and time-consuming. Orvanzia Visa simplifies the experience with clear information, practical guidance and dedicated support, so you can move forward with confidence."
             />
-            <Stagger className="mt-8 space-y-4">
+            <Stagger className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
-                ["Transparent Process", "Know what to expect at each stage."],
-                ["Personalised Guidance", "Advice focused on your travel plans."],
-                ["Dedicated Support", "Human assistance when you need it."],
-              ].map(([t, d]) => (
-                <StaggerItem key={t} className="flex gap-4 rounded-2xl border border-line p-4 transition hover:border-gold-500 hover:bg-gold-100/40">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-navy-800 text-gold-400">
-                    <ShieldCheck size={18} />
-                  </span>
-                  <span>
-                    <b className="block text-ink">{t}</b>
-                    <span className="text-muted">{d}</span>
-                  </span>
-                </StaggerItem>
-              ))}
+                [Eye, "Transparent Process", "Know what to expect at each stage."],
+                [UserRoundCheck, "Personalised Guidance", "Advice focused on your travel plans."],
+                [Headset, "Dedicated Support", "Human assistance when you need it."],
+                [ShieldCheck, "Honest Advice", "No false promises, just clear facts."],
+              ].map(([I, t, d]) => {
+                const Icon = I as typeof Eye;
+                return (
+                  <StaggerItem
+                    key={t as string}
+                    className="group rounded-2xl border border-line p-5 transition duration-300 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_20px_40px_-25px_rgba(12,31,92,0.5)]"
+                  >
+                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-navy-800 text-gold-400 transition group-hover:bg-gold-500 group-hover:text-navy-950">
+                      <Icon size={20} />
+                    </span>
+                    <b className="mt-3 block text-ink">{t as string}</b>
+                    <span className="text-sm text-muted">{d as string}</span>
+                  </StaggerItem>
+                );
+              })}
             </Stagger>
-            <Reveal delay={0.2}>
-              <Link href="/about" className="btn-primary mt-8">
+            <Reveal delay={0.2} className="mt-8 flex flex-wrap items-center gap-6">
+              <Link href="/about" className="btn-primary">
                 Learn More About Orvanzia <ArrowRight size={17} />
               </Link>
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-3">
+                  {aboutFlags.map((c) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={c} src={flag(c, 80)} alt="" className="h-9 w-9 rounded-full object-cover ring-2 ring-white" />
+                  ))}
+                </div>
+                <span className="text-sm text-muted">
+                  <b className="text-ink">196</b> countries, one team
+                </span>
+              </div>
             </Reveal>
           </div>
         </div>

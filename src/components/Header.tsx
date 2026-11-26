@@ -21,9 +21,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -82,7 +84,7 @@ export default function Header() {
                   {item.label}
                   {item.children && <ChevronDown size={14} className="transition-transform duration-300 group-hover:rotate-180" />}
                   {isActive(item.href) && (item.href !== "/destinations" || item.label === "Destinations") && (
-                    <motion.span layoutId="nav-underline" className="absolute inset-x-3 -bottom-[17px] h-[3px] rounded-full bg-gold-500" />
+                    <motion.span layoutId="nav-underline" className="absolute inset-x-3 -bottom-0.5 h-[3px] rounded-full bg-gold-500" />
                   )}
                 </Link>
                 {item.children && (
