@@ -9,9 +9,46 @@ import { services } from "@/lib/services";
 
 type Status = { state: "idle" | "sending" | "done" | "error"; msg?: string };
 
+// FormSubmit blocks server (datacenter) requests, so the browser posts directly using the
+// random form ID FormSubmit issues after activation — the inbox address never appears in the site.
+const FORM_ID = process.env.NEXT_PUBLIC_FORMSUBMIT_ID;
+
+const LABELS: Record<string, string> = {
+  name: "Full name",
+  email: "Email",
+  phone: "Phone",
+  destination: "Destination",
+  visa: "Visa type",
+  date: "Travel date",
+  timetocall: "Best time to call",
+  message: "Message",
+};
+
 async function submit(form: HTMLFormElement, type: string): Promise<Status> {
-  const data = Object.fromEntries(new FormData(form).entries());
+  const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
   try {
+    if (FORM_ID) {
+      if (data.website) return { state: "done" }; // honeypot
+      if (!data.name || data.name.trim().length < 2) return { state: "error", msg: "Please enter your name." };
+      const payload: Record<string, string> = {
+        _subject: `${type === "consultation" ? "Consultation request" : "New enquiry"} from ${data.name}${data.destination ? ` – ${data.destination}` : ""}`,
+        _template: "table",
+        _captcha: "false",
+        _replyto: data.email || "",
+        Form: type === "consultation" ? "Book a consultation" : "Enquiry",
+        Page: window.location.href,
+      };
+      for (const [k, v] of Object.entries(data)) if (k !== "website" && v) payload[LABELS[k] || k] = String(v).slice(0, 2000);
+      const r = await fetch(`https://formsubmit.co/ajax/${FORM_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const j = await r.json().catch(() => ({}));
+      return String(j.success) === "true"
+        ? { state: "done" }
+        : { state: "error", msg: "Sorry, we couldn't send that right now. Please WhatsApp us instead." };
+    }
     const r = await fetch("/api/enquiry", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
