@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+:root {
+  --navy-950: #061235;
+  --navy-900: #0a1a4f;
+  --navy-800: #0c1f5c;
+  --navy-700: #13307f;
+  --navy-600: #1b3fa3;
+  --navy-50: #eef2fb;
+  --gold-600: #b8892a;
+  --gold-500: #c9a13b;
+  --gold-400: #ddb95a;
+  --gold-100: #f8efd9;
+  --ink: #0b1630;
+  --muted: #5b6785;
+  --line: #e4e8f2;
+  --surface: #f6f8fc;
+}
+
+@theme inline {
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-600: var(--navy-600);
+  --color-navy-50: var(--navy-50);
+  --color-gold-600: var(--gold-600);
+  --color-gold-500: var(--gold-500);
+  --color-gold-400: var(--gold-400);
+  --color-gold-100: var(--gold-100);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-jakarta), var(--font-inter), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--gold-400);
+  color: var(--navy-950);
+}
+
+/* faint plane pattern, a nod to the brand mark */
+.plane-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cpath fill='%230c1f5c' fill-opacity='0.045' d='M128 104l-6-30-8 2 2 28-26 10-8-10-5 2 4 14-12 6 2 5 13-4 6 13 5-2-3-12 24-14 18 22 7-4-13-26z'/%3E%3C/svg%3E");
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold-600;
+}
+.eyebrow::before {
+  content: "";
+  @apply h-px w-6 bg-gold-500;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-navy-800 px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_-10px_rgba(12,31,92,0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-[0_16px_40px_-12px_rgba(12,31,92,0.8)];
+}
+.btn-gold {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-gold-400 to-gold-500 px-6 py-3.5 text-[15px] font-semibold text-navy-950 shadow-[0_10px_30px_-10px_rgba(201,161,59,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105;
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-navy-800 px-6 py-3 text-[15px] font-semibold text-navy-800 transition-all duration-300 hover:bg-navy-800 hover:text-white;
+}
+.btn-ghost-light {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-3.5 text-[15px] font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-navy-900;
+}
+
+.field {
+  @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none transition placeholder:text-muted/70 focus:border-navy-600 focus:ring-4 focus:ring-navy-600/10;
+}
+.label {
+  @apply mb-1.5 block text-sm font-medium text-ink;
+}
+
+.container-x {
+  @apply mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8;
+}
+
+.section {
+  @apply py-20 md:py-28;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
