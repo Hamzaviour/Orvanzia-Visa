@@ -66,7 +66,7 @@ export default function Header() {
 
       <div
         className={`border-b transition-all duration-500 ${
-          scrolled ? "border-line bg-white/90 shadow-[0_8px_30px_-12px_rgba(11,22,48,0.18)] backdrop-blur-xl" : "border-transparent bg-white"
+          scrolled ? "border-line bg-white/[0.97] shadow-[0_8px_30px_-12px_rgba(11,22,48,0.18)]" : "border-transparent bg-white"
         }`}
       >
         <div className={`container-x flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-[76px]"}`}>

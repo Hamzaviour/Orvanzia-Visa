@@ -8,7 +8,7 @@ import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Plane } from "luci
 import VideoSlide from "./Hero";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const DURATIONS = [9000, 7000]; // ms per slide: video, branded image
+const DURATIONS = [7000, 9000]; // ms per slide: branded image, video
 
 const landmarks = [
   { src: "/hero/big-ben.webp", label: "London", alt: "Big Ben and the Houses of Parliament, London", cls: "left-[4%] top-[18%] h-[58%] w-[24%] z-20", d: 0.1 },
@@ -41,7 +41,7 @@ function BrandSlide({ active }: { active: boolean }) {
           >
             Your journey, our expertise
           </motion.span>
-          <h2 className="mt-5 text-[40px] font-extrabold leading-[1.06] text-ink sm:text-6xl lg:text-[64px]">
+          <h1 className="mt-5 text-[40px] font-extrabold leading-[1.06] text-ink sm:text-6xl lg:text-[64px]">
             {["The World Is", "Waiting. We'll", "Handle the Visa."].map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
@@ -60,7 +60,7 @@ function BrandSlide({ active }: { active: boolean }) {
                 </motion.span>
               </span>
             ))}
-          </h2>
+          </h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
@@ -196,20 +196,21 @@ export default function HeroSlider() {
       <div className="grid">
         <motion.div
           className="[grid-area:1/1]"
-          animate={{ opacity: slide === 0 ? 1 : 0, scale: slide === 0 ? 1 : 1.04 }}
-          transition={{ duration: 1, ease }}
-          style={{ pointerEvents: slide === 0 ? "auto" : "none", zIndex: slide === 0 ? 2 : 1 }}
+          initial={false}
+          animate={{ opacity: slide === 0 ? 1 : 0, transitionEnd: { visibility: slide === 0 ? "visible" : "hidden" } }}
+          transition={{ duration: 0.9, ease }}
+          style={{ pointerEvents: slide === 0 ? "auto" : "none", zIndex: slide === 0 ? 2 : 1, visibility: "visible" }}
         >
-          <VideoSlide active={slide === 0} />
+          <BrandSlide active={slide === 0} />
         </motion.div>
         <motion.div
           className="[grid-area:1/1]"
           initial={false}
-          animate={{ opacity: slide === 1 ? 1 : 0, scale: slide === 1 ? 1 : 1.04 }}
-          transition={{ duration: 1, ease }}
-          style={{ pointerEvents: slide === 1 ? "auto" : "none", zIndex: slide === 1 ? 2 : 1 }}
+          animate={{ opacity: slide === 1 ? 1 : 0, transitionEnd: { visibility: slide === 1 ? "visible" : "hidden" } }}
+          transition={{ duration: 0.9, ease }}
+          style={{ pointerEvents: slide === 1 ? "auto" : "none", zIndex: slide === 1 ? 2 : 1, visibility: "visible" }}
         >
-          <BrandSlide active={slide === 1} />
+          <VideoSlide active={slide === 1} />
         </motion.div>
       </div>
 
@@ -218,8 +219,8 @@ export default function HeroSlider() {
         <button
           onClick={() => go(slide - 1)}
           aria-label="Previous slide"
-          className={`grid h-10 w-10 place-items-center rounded-full border backdrop-blur transition hover:scale-110 ${
-            slide === 0 ? "border-white/40 bg-white/10 text-white" : "border-navy-800/20 bg-white text-navy-800"
+          className={`grid h-10 w-10 place-items-center rounded-full border transition hover:scale-110 ${
+            slide === 1 ? "border-white/40 bg-white/10 text-white" : "border-navy-800/20 bg-white text-navy-800"
           }`}
         >
           <ChevronLeft size={18} />
@@ -232,7 +233,7 @@ export default function HeroSlider() {
               aria-label={`Go to slide ${i + 1}`}
               aria-current={slide === i}
               className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 before:absolute before:-inset-x-1 before:-inset-y-4 before:content-[''] ${i === slide ? "w-14" : "w-6"} ${
-                slide === 0 ? "bg-white/30" : "bg-navy-800/15"
+                slide === 1 ? "bg-white/30" : "bg-navy-800/15"
               }`}
             >
               <AnimatePresence>
@@ -252,8 +253,8 @@ export default function HeroSlider() {
         <button
           onClick={() => go(slide + 1)}
           aria-label="Next slide"
-          className={`grid h-10 w-10 place-items-center rounded-full border backdrop-blur transition hover:scale-110 ${
-            slide === 0 ? "border-white/40 bg-white/10 text-white" : "border-navy-800/20 bg-white text-navy-800"
+          className={`grid h-10 w-10 place-items-center rounded-full border transition hover:scale-110 ${
+            slide === 1 ? "border-white/40 bg-white/10 text-white" : "border-navy-800/20 bg-white text-navy-800"
           }`}
         >
           <ChevronRight size={18} />

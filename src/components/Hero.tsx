@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 import { ArrowRight, BadgeCheck, CheckCircle2, Clock3, Globe2 } from "lucide-react";
 import DestinationSearch from "./DestinationSearch";
 
@@ -11,45 +11,60 @@ const words = ["Fast,", "Clear", "&", "Stress-Free"];
 
 export default function VideoSlide({ active = true }: { active?: boolean }) {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Only decode/play the video while this slide is active and the hero is on screen.
+  useEffect(() => {
+    const v = videoRef.current;
+    const el = ref.current;
+    if (!v || !el) return;
+    let onScreen = true;
+    const sync = () => {
+      if (active && onScreen) v.play().catch(() => {});
+      else v.pause();
+    };
+    const io = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting;
+      sync();
+    });
+    io.observe(el);
+    sync();
+    return () => io.disconnect();
+  }, [active]);
 
   return (
-    <section ref={ref} aria-hidden={!active} inert={!active} className="relative isolate flex min-h-[calc(100svh-112px)] items-center overflow-hidden bg-navy-950">
+    <section ref={ref} aria-hidden={!active} inert={!active} className="relative isolate flex min-h-[calc(100svh-112px)] items-center overflow-hidden bg-navy-950 [contain:paint]">
       {/* background video */}
-      <motion.div style={{ y: videoY, scale: videoScale }} className="absolute inset-0 -z-20">
+      <div className="absolute inset-0 -z-20">
         <video
+          ref={videoRef}
           className="h-full w-full -scale-x-100 object-cover object-[30%_center]"
-          autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/video/hero-poster.webp"
           aria-hidden
         >
           <source src="/video/hero.webm" type="video/webm" />
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
-      </motion.div>
+      </div>
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-950/45 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-navy-950/50 to-transparent" />
 
-      <motion.div style={{ y: contentY, opacity: fade }} className="container-x relative grid items-center gap-12 py-20 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="container-x relative grid items-center gap-12 py-20 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <motion.span
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease }}
-            className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-500/10 px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold-400 backdrop-blur"
+            className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-navy-950/40 px-4 py-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-gold-400"
           >
             <Globe2 size={14} /> Your journey, our expertise
           </motion.span>
 
-          <h1 className="mt-6 text-[42px] font-extrabold leading-[1.05] text-white sm:text-6xl lg:text-[70px]">
+          <h2 className="mt-6 text-[42px] font-extrabold leading-[1.05] text-white sm:text-6xl lg:text-[70px]">
             <span className="block overflow-hidden">
               {words.map((w, i) => (
                 <motion.span
@@ -73,7 +88,7 @@ export default function VideoSlide({ active = true }: { active?: boolean }) {
                 Visa Services
               </motion.span>
             </span>
-          </h1>
+          </h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -124,7 +139,7 @@ export default function VideoSlide({ active = true }: { active?: boolean }) {
           transition={{ duration: 1, ease, delay: 0.6 }}
           className="relative z-20"
         >
-          <div className="rounded-3xl border border-white/20 bg-navy-950/25 p-6 shadow-2xl backdrop-blur-[3px] sm:p-7">
+          <div className="rounded-3xl border border-white/20 bg-navy-950/45 p-6 shadow-2xl sm:p-7">
             <p className="text-sm font-semibold uppercase tracking-wider text-gold-400">Check your visa</p>
             <h2 className="mt-2 text-2xl font-bold text-white">Where are you travelling to?</h2>
             <div className="mt-5">
@@ -145,7 +160,7 @@ export default function VideoSlide({ active = true }: { active?: boolean }) {
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0 }}
